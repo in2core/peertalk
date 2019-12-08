@@ -320,6 +320,12 @@ static const uint8_t kUserInfoKey;
     if (callback) callback([NSError errorWithDomain:NSPOSIXErrorDomain code:errno userInfo:nil]);
     return;
   }
+
+  if (setsockopt(fd, SOL_SOCKET, SO_REUSEPORT, &on, sizeof(on)) == -1) {
+    close(fd);
+    if (callback) callback([NSError errorWithDomain:NSPOSIXErrorDomain code:errno userInfo:nil]);
+    return;
+  }
   
   if (fcntl(fd, F_SETFL, O_NONBLOCK) == -1) {
     close(fd);
