@@ -12,4 +12,6 @@
 *.patch
 *.diff
 
+/.build
+/Packages
 xcuserdata
